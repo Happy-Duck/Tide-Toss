@@ -257,7 +257,7 @@ MonoBehaviour:
   source: {fileID: 130269430195701470}
   plop: {fileID: 8300000, guid: 7d2f472c357e4e740bd04e42e36b0e6a, type: 3}
   whoosh: {fileID: 8300000, guid: c51319fea59ca434cb5869892a9e28c6, type: 3}
-  spFactor: 100
+  spFactor: 40
   animator: {fileID: 4860643888145803873}
   pauseMenuManager: {fileID: 0}
 --- !u!54 &5050595121968861278
