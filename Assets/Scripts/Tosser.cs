@@ -13,6 +13,9 @@ public class Tosser : MonoBehaviour
     [SerializeField] float spFactor = 0.01f;
     [SerializeField] public Animator animator;
 
+    public PauseMenuManager pauseMenuManager; 
+
+
     public System.Action floorCollision;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -21,6 +24,8 @@ public class Tosser : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
         animator.speed = 0;
+        pauseMenuManager = FindAnyObjectByType<PauseMenuManager>();
+        pauseMenuManager.isPaused = false;
     }
 
     bool swiping = false;
@@ -31,18 +36,20 @@ public class Tosser : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    { 
+    {
         //Reset DEBUG FUNCTION
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            transform.position = new Vector3(0f, -0.8f, 1f);
-            rb.linearVelocity = Vector3.zero;
-            animator.Update(0);
-            rb.useGravity = false;
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    transform.position = new Vector3(0f, -0.8f, 1f);
+        //    rb.linearVelocity = Vector3.zero;
+        //    animator.Update(0);
+        //    rb.useGravity = false; THIS IS NOT GOOD LMAO
 
-        }
+        //}
 
-        if (Mouse.current.leftButton.wasPressedThisFrame && fresh)
+        //Debug.Log(pauseMenuManager.isPaused);
+
+        if (Mouse.current.leftButton.wasPressedThisFrame && fresh && !pauseMenuManager.isPaused)
         {
             swiping = true;
             swipe = Vector2.zero;
@@ -50,7 +57,7 @@ public class Tosser : MonoBehaviour
 
         }
 
-        if (Mouse.current != null && swiping && fresh)
+        if (Mouse.current != null && swiping && fresh && !pauseMenuManager.isPaused)
         {
             //Debug.Log(Mouse.current.delta.value);
             swipe += Mouse.current.delta.value;
@@ -61,16 +68,15 @@ public class Tosser : MonoBehaviour
             
         }
 
-        if (Mouse.current.leftButton.wasReleasedThisFrame && swiping && fresh)
+        if (Mouse.current.leftButton.wasReleasedThisFrame && swiping && fresh && !pauseMenuManager.isPaused)
         {
             source.PlayOneShot(whoosh);
             swiping=false;
-            Vector3 speed = new Vector3(swipe.x * spFactor , swipe.y * spFactor , swipe.y * spFactor ); //swipe.y*spFactor/swipeTime, swipe.y * spFactor / swipeTime);
+            Vector3 speed = new Vector3(swipe.x * spFactor * Time.deltaTime , swipe.y * spFactor * Time.deltaTime, swipe.y * spFactor * Time.deltaTime); //swipe.y*spFactor/swipeTime, swipe.y * spFactor / swipeTime);
             //Debug.Log(speed);
             animator.speed = 1;
             OnToss(speed);
         }
-
     }
 
     void OnToss(Vector3 speed)
@@ -83,6 +89,17 @@ public class Tosser : MonoBehaviour
     {
         if (collider.gameObject.tag == "kid" && fresh)
         {
+            floorCollision?.Invoke();
+            Debug.Log("pod destroyed");
+            Destroy(gameObject);
+
+        }
+
+        if (collider.gameObject.tag == "barrier" )
+        {
+            Debug.Log("Barrier Hit");
+            if (source != null) source.PlayOneShot(plop);
+            floorCollision?.Invoke();
             Destroy(gameObject);
         }
 

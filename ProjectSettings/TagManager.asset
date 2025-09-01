@@ -6,6 +6,8 @@ TagManager:
   tags:
   - TidePod
   - floor
+  - kid
+  - barrier
   layers:
   - Default
   - TransparentFX

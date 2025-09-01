@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -9,10 +10,15 @@ public class MainMenuManager : MonoBehaviour
     private bool IsMuted;
     [SerializeField] private GameObject MuteTexture;
 
+    //public PauseMenuManager pauseMenuManager;
+
 
     void Start()
     {
+        //pauseMenuManager = FindAnyObjectByType<PauseMenuManager>();
         StartCoroutine(SpawnUIPods());
+        DontDestroyOnLoad(gameObject);
+
     }
 
     IEnumerator SpawnUIPods()
@@ -25,7 +31,7 @@ public class MainMenuManager : MonoBehaviour
 
 
         StartCoroutine(SpawnUIPods());
-        // Is this how you do loops......?
+        // Is this how you do loops......? yes?
     }
 
     public void StartGame() // Will be called by the start button !!!!!!!
@@ -37,10 +43,14 @@ public class MainMenuManager : MonoBehaviour
 
         mainMenuUI.gameObject.SetActive(false);
 
+        //if (pauseMenuManager != null) pauseMenuManager.isPaused = true;
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(1);
+
 
     }
 
-    public void QuitGame() // Quit Buttobn
+    public void QuitGame() // Quit Buttobn //nice
     {
         Application.Quit();
     }
@@ -55,12 +65,14 @@ public class MainMenuManager : MonoBehaviour
         if (IsMuted)
         {
             // Unmute the game... IDK how tho lol
+            AudioListener.volume = 1f;
             IsMuted = false;
             MuteTexture.SetActive(false);
         }
         else
         {
             // Mute the game
+            AudioListener.volume = 0f;
             IsMuted = true;
             MuteTexture.SetActive(true);
         }

@@ -141,6 +141,7 @@ GameObject:
   - component: {fileID: 2274706678503588181}
   - component: {fileID: 5050595121968861278}
   - component: {fileID: 130269430195701470}
+  - component: {fileID: -7437144220740859634}
   m_Layer: 3
   m_Name: TossPod
   m_TagString: TidePod
@@ -256,8 +257,9 @@ MonoBehaviour:
   source: {fileID: 130269430195701470}
   plop: {fileID: 8300000, guid: 7d2f472c357e4e740bd04e42e36b0e6a, type: 3}
   whoosh: {fileID: 8300000, guid: c51319fea59ca434cb5869892a9e28c6, type: 3}
-  spFactor: 1
+  spFactor: 100
   animator: {fileID: 4860643888145803873}
+  pauseMenuManager: {fileID: 0}
 --- !u!54 &5050595121968861278
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -280,7 +282,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
@@ -382,3 +384,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &-7437144220740859634
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4399967916051253528}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 78a30c57e51a36448bdffe6f1d4a0235, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
